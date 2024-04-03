@@ -1,0 +1,81 @@
+
+<mat-card>
+
+    <h2 class="alinear">Listado de Categorías</h2>
+
+    <mat-card-header>
+        <div> <!--Buscador de categorías-->
+            <mat-form-field hintLabel="Búsqueda por Categorías" appearance="fill">
+
+                <mat-label>Buscar Categorías</mat-label>
+                <input matInput #input>
+
+            </mat-form-field>
+        </div>
+    </mat-card-header>
+
+    <mat-card-header>
+        <div class="right">
+            <ul>
+                <li>
+                    <button mat-raised-button color="primary">
+                        Agregar Categoría
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+    </mat-card-header>
+
+    <div mat-card-image></div>
+
+    <mat-card-content>
+        <table mat-table [dataSource]="dataSource">
+
+            <!--ID column-->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>Nº</th>
+                <td mat-cell *matCellDef="let element">{{element.id}}</td>
+            </ng-container>
+
+             <!--NAME column-->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+            </ng-container>
+
+            <!--DESCRIPTION column-->
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef>Descripción</th>
+                <td mat-cell *matCellDef="let element">{{element.description}}</td>
+            </ng-container>
+
+           <!-- ACTIONS -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let element; let i=index;">
+
+                    <button mat-icon-button color="accent">
+                          <mat-icon aria-label="Edit">edit</mat-icon>
+                    </button>
+
+                    <button mat-icon-button color="accent">
+                          <mat-icon aria-label="Delete">delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+  
+            <!-- Data -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+        </table>
+
+        <!-- PAGINATION -->
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+              
+        </mat-paginator>
+
+    </mat-card-content>
+
+</mat-card>
