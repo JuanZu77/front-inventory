@@ -9,7 +9,7 @@ import { CategoryModule } from '../category/category.module';
 @NgModule({
   declarations: [
     DashboardComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     CommonModule,
