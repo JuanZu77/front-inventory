@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../../../shared/services/category.service';
 import { subscribe } from 'diagnostics_channel';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { error } from 'console';
 
 @Component({
@@ -17,14 +17,31 @@ export class NewCategoryComponent implements OnInit {
   
   private categoryService = inject(CategoryService);
   private dialogRef = inject(MatDialogRef);
+
+  public data = inject(MAT_DIALOG_DATA);//update data
+
+  //State form update categories
+  stateForm: string = "";
   
   ngOnInit(): void {  
+
+    this.stateForm="Agregar"
+
     this.categoryForm = this.fb.group({
       name:['',Validators.required],
       description:['',Validators.required]
     })
+
+    if(this.data!= null){
+     this.updateForm(this.data);
+     this.stateForm="Actualizar"
+    }
   };
 
+
+ /**
+  * Add new category
+  */ 
   onSave(){
 
     let data = {
@@ -32,7 +49,23 @@ export class NewCategoryComponent implements OnInit {
       description: this.categoryForm.get('description')?.value
     }
 
-    /*utilizamos el saveCategory del CategoryService*/
+    if(this.data!=null){ //update registry
+
+      this.categoryService.updateCategory(data, this.data.id)
+      .subscribe({
+        next: (data:any)=>{
+          console.log(data);
+          this.dialogRef.close(1);
+        },
+        error: (err:any)=>{
+          console.log(err.error.msg)
+          this.dialogRef.close(2);
+        }
+      })
+    }
+    else{ //create new registry
+
+       /*We use saveCategory from CategoryService*/
     this.categoryService.saveCategory(data)
     .subscribe({
                next: (data:any) =>{
@@ -44,11 +77,28 @@ export class NewCategoryComponent implements OnInit {
                    this.dialogRef.close(2);   
                }
      });
+    }
+
+   
+  };
+
+/**
+ * Button Cancel Add category
+ */
+  onCancel(){
+    this.dialogRef.close(3);  /*lo cerramos son mostrar mensajes */
   };
 
 
-  onCancel(){
-    this.dialogRef.close(3);  /*lo cerramos son mostrar mensajes */
+/**
+ * Update Category with wdit button
+ * @param data 
+ */
+  updateForm(data:any){
+    this.categoryForm = this.fb.group({
+      name:[data.name, Validators.required],
+      description:[data.description ,Validators.required]
+    })
   };
 
 
