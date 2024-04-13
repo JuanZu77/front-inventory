@@ -139,4 +139,23 @@ export class CategoryComponent implements OnInit{
               
       }
 
+
+
+      //SEARCH category by id
+      search(termino:string){
+          if(termino.length === 0){
+              return this.getCategories();
+          }
+
+          this.categoryServices.getCategoryById(termino)
+          .subscribe({
+            next:(resp:any)=>{
+              this.processCategoriesResponse(resp);
+            },
+            error:(err:any)=>{
+              console.log(err.error.msg)
+            }
+
+          });
+      }
 }

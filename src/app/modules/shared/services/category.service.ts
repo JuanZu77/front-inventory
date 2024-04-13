@@ -43,9 +43,25 @@ export class CategoryService {
     return this.http.put(endpoint, body);
   }
 
+  /**
+   * delete registry
+   * @param id 
+   * @returns 
+   */
   deleteCategory(id:any){
     const endpoint= `${base_url}/categories/${id}`;
     return this.http.delete(endpoint);
+  }
+
+
+  /**
+   * search category by ID
+   * @param id 
+   * @returns 
+   */
+  getCategoryById(id:any){
+    const endpoint= `${base_url}/categories/${id}`;
+    return this.http.get(endpoint);
   }
   
 
