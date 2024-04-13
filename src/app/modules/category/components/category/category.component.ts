@@ -1,10 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { NewCategoryComponent } from '../new-category/new-category.component';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../../shared/components/confirm/confirm.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 export interface CategoryElement{
   id:number,
@@ -31,7 +32,12 @@ export class CategoryComponent implements OnInit{
   dataSource = new MatTableDataSource<CategoryElement>();
 
 
+//PAGINATION
+     @ViewChild(MatPaginator)
+     paginator!: MatPaginator;
+  
 
+//GET Categories
       getCategories():void{
       
         this.categoryServices.getCategories()
@@ -48,6 +54,8 @@ export class CategoryComponent implements OnInit{
                 );
       }
 
+
+//Process Categories 
       processCategoriesResponse(resp:any){
 
         const dataCategory: CategoryElement[]=[];
@@ -60,11 +68,13 @@ export class CategoryComponent implements OnInit{
             });
 
             this.dataSource = new MatTableDataSource<CategoryElement>(dataCategory);
+            this.dataSource.paginator = this.paginator;
         }
 
       }
 
 
+//DIALOG    
       openCategoryDialog(){
         const dialogRef = this.dialog.open(NewCategoryComponent, {
           width:'450px',
@@ -85,6 +95,7 @@ export class CategoryComponent implements OnInit{
       };
 
 
+//SNACK 
       openSnackBar(message: string, action:string):MatSnackBarRef<SimpleSnackBar> {
 
         return this.snackBar.open(message, action, {
@@ -95,7 +106,7 @@ export class CategoryComponent implements OnInit{
 
 
 
-      //Method Edit button Editar
+ //UPDATE Categories
       edit(id: number, name:string, description: string){
         
         const dialogRef = this.dialog.open(NewCategoryComponent, {
@@ -117,7 +128,7 @@ export class CategoryComponent implements OnInit{
       }
 
 
-      //Method delete category
+//Delete Categories
       delete(id:any){
 
         const dialogRef = this.dialog.open(ConfirmComponent, {
@@ -141,7 +152,7 @@ export class CategoryComponent implements OnInit{
 
 
 
-      //SEARCH category by id
+//SEARCH category by id
       search(termino:string){
           if(termino.length === 0){
               return this.getCategories();
@@ -158,4 +169,6 @@ export class CategoryComponent implements OnInit{
 
           });
       }
-}
+
+
+};
