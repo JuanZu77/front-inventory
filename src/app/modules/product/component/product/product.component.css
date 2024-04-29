@@ -1,0 +1,23 @@
+
+.alinear{
+    text-align: center;
+    margin-top: 1.5em;
+}
+
+table{
+    width: 100%;
+}
+
+
+ul li {
+    list-style: none;
+}
+
+.right{
+     margin-left: auto;
+     margin-right: 4em; 
+}
+
+mat-form-field{ /*Buscador*/
+ width: 140%;
+}
