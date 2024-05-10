@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../shared/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductComponent } from './component/product/product.component';
+import { FormSaveProductComponent } from './component/form-save-product/form-save-product.component';
 
 
 
 @NgModule({
   declarations: [
-    ProductComponent
+    ProductComponent,
+    FormSaveProductComponent
   ],
   imports: [
     CommonModule,
