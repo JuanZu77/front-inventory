@@ -50,10 +50,10 @@ export class FormSaveProductComponent implements OnInit{
 
     });
 
-    // if(this.data!= null){
-    //  this.updateForm(this.data);
-    //  this.stateForm="Actualizar"
-    // }
+    if(this.data!= null){
+     this.updateForm(this.data);
+     this.stateForm="Actualizar"
+    }
   };
 
 
@@ -88,16 +88,30 @@ export class FormSaveProductComponent implements OnInit{
        uploadImageData.append('account',data.account);
        uploadImageData.append('categoryId',data.category);
 
-       //call the service to save a product
+      //UPDATE - If there is information to update
+      if(this.data != null){
+        this.productService.updateProduct(uploadImageData, this.data.id)
+        .subscribe({
+          next: (data:any)=>{
+                this.dialogRef.close(1)
+          },
+          error:(err:any)=>{
+                this.dialogRef.close(2);
+          }
+        });
+       
+      }else{
+        //SAVE PRODUCT - call the service to save a product
        this.productService.saveProducts(uploadImageData)
-       .subscribe({
-         next: (data:any)=>{
-              this.dialogRef.close(1)
-         },
-         error:(err:any)=>{
-              this.dialogRef.close(2);
-         }
-       });
+          .subscribe({
+            next: (data:any)=>{
+                  this.dialogRef.close(1)
+            },
+            error:(err:any)=>{
+                  this.dialogRef.close(2);
+            }
+          });
+      }
   };
 
 
@@ -114,8 +128,23 @@ export class FormSaveProductComponent implements OnInit{
     console.log(this.selectedFile);
 
     this.nameImg = event.target.files[0].name; //recuperar el nombre
+  };
 
 
-  }
+  /**
+ * Update Product with edit button
+ * @param data 
+ */
+  updateForm(data:any){
+    this.productForm = this.fb.group({
+      name:[data.name, Validators.required],
+      price:[data.price ,Validators.required],
+      account:[data.account, Validators.required],
+      category:[data.category.id, Validators.required],
+      picture:[data.picture, Validators.required],
+    });
+  };
 
-}
+
+
+};

@@ -30,6 +30,18 @@ export class ProductService {
     return this.http.post(endpoint, body)
   };
 
+
+  /**
+   * update Products
+   * @param body 
+   * @param id 
+   * @returns 
+   */
+  updateProduct (body:any, id:any) {
+    const endpoint = `${base_url}/products/${id}`;
+    return this.http.put(endpoint, body)
+  }
+
   
 
 

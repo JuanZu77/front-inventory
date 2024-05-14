@@ -40,7 +40,7 @@ export class NewCategoryComponent implements OnInit {
 
 
  /**
-  * Add new category
+  * Add new category or UPDATE category
   */ 
   onSave(){
 
