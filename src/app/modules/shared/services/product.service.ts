@@ -32,7 +32,7 @@ export class ProductService {
 
 
   /**
-   * update Products
+   * update products
    * @param body 
    * @param id 
    * @returns 
@@ -40,6 +40,17 @@ export class ProductService {
   updateProduct (body:any, id:any) {
     const endpoint = `${base_url}/products/${id}`;
     return this.http.put(endpoint, body)
+  }
+
+
+  /**
+   * delete products
+   * @param id 
+   * @returns 
+   */
+  deleteProduct(id:any){
+    const endpoint = `${base_url}/products/${id}`;
+    return this.http.delete(endpoint)
   }
 
   
