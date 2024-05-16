@@ -8,7 +8,7 @@
             <mat-form-field hintLabel="Búsqueda de Productos" appearance="fill">
 
                 <mat-label>Buscar Productos</mat-label>
-                <input matInput #input>
+                <input matInput #input (keyup)="search(input.value)">
 
             </mat-form-field>
         </div>

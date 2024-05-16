@@ -6,6 +6,8 @@ import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/s
 import { MatDialog } from '@angular/material/dialog';
 import { FormSaveProductComponent } from '../form-save-product/form-save-product.component';
 import { ConfirmComponent } from '../../../shared/components/confirm/confirm.component';
+import { subscribe } from 'node:diagnostics_channel';
+import { error } from 'node:console';
 
 
 export interface ProductElement{
@@ -160,6 +162,26 @@ export class ProductComponent implements OnInit{
             this.getProducts();
           }
         });
+      };
+
+      //SEARCH
+      search(name:any){
+
+        if(name.length === 0 ){
+           return this.getProducts();
+        }
+
+        this.productService.getProductByName(name)
+        .subscribe({
+          next: (data:any)=>{
+             this.processProductResponse(data)
+          },
+          error: (err:any)=>{
+            console.log(err.error.msg)
+          }
+        })
+        
       }
+
 
 };
