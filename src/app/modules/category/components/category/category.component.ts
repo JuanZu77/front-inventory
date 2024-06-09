@@ -6,6 +6,8 @@ import { NewCategoryComponent } from '../new-category/new-category.component';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../../shared/components/confirm/confirm.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { UtilService } from '../../../shared/services/util.service';
+
 
 export interface CategoryElement{
   id:number,
@@ -19,14 +21,19 @@ export interface CategoryElement{
   styleUrl: './category.component.css'
 })
 export class CategoryComponent implements OnInit{
+
+  isAdmin: any
   
   private categoryServices = inject(CategoryService);
   
   public dialog = inject(MatDialog);
-  private snackBar = inject(MatSnackBar);  
+  private snackBar = inject(MatSnackBar); 
+  private util = inject(UtilService); //keycloakService
   
   ngOnInit(): void {
     this.getCategories();
+    //console.log(this.util.getRoles());
+    this.isAdmin = this.util.isAdmin();
   }
   displayedColumns:string[]=['id','name','description','actions'];
   dataSource = new MatTableDataSource<CategoryElement>();

@@ -8,6 +8,7 @@ import { FormSaveProductComponent } from '../form-save-product/form-save-product
 import { ConfirmComponent } from '../../../shared/components/confirm/confirm.component';
 import { subscribe } from 'node:diagnostics_channel';
 import { error } from 'node:console';
+import { UtilService } from '../../../shared/services/util.service';
 
 
 export interface ProductElement{
@@ -27,12 +28,17 @@ export interface ProductElement{
 })
 export class ProductComponent implements OnInit{
 
+  isAdmin:any
+
   private productService = inject(ProductService);
   private snackBar = inject(MatSnackBar);
   public dialog = inject(MatDialog);
 
+  private util = inject(UtilService)
+
   ngOnInit(): void {
     this.getProducts();
+    this.isAdmin = this.util.isAdmin();
   }
   displayedColumns:string[]=['id','name','price','account', 'category', 'picture', 'actions'];
   dataSource = new MatTableDataSource<ProductElement>();
