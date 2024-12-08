@@ -1,5 +1,5 @@
 import { NgModule, APP_INITIALIZER, PLATFORM_ID, Inject } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
@@ -8,6 +8,7 @@ import { MaterialModule } from './modules/shared/material.module';
 import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
 import { KeycloakOnLoad, KeycloakFlow } from 'keycloak-js';
 import { isPlatformBrowser } from '@angular/common';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 function initializeKeycloak(keycloak: KeycloakService, platformId: Object) {
   return () => {
@@ -48,6 +49,8 @@ function initializeKeycloak(keycloak: KeycloakService, platformId: Object) {
     KeycloakAngularModule
   ],
   providers: [
+    provideHttpClient(withFetch()),
+    provideClientHydration(),
     provideAnimationsAsync(),
     {
       provide: APP_INITIALIZER,
