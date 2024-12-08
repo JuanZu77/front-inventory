@@ -24,9 +24,12 @@
                     <button mat-button [matMenuTriggerFor]="menu">
                         <mat-icon>person_outline</mat-icon>
                     </button>
+
                     <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="logout()">
                            <mat-icon>exit_to_app</mat-icon>
                            Cerrar Sesión
+                        </button>
                     </mat-menu>
                 </li>
             </ul>
@@ -47,8 +50,8 @@
     <!-- ----------- Profile -------------->
                 <div class="profile-card">
                     <div class="header">
-                        <h2>Juan Zubiri</h2>
-                        <h4>github.com/JuanZu77</h4>
+                        <h2>{{username}}</h2>
+                        <h6>{{email}}</h6>
                     </div>
                 </div>
   
