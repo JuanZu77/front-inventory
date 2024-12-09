@@ -24,6 +24,8 @@
     "@angular/router": "^17.2.0",
     "@angular/ssr": "^17.2.2",
     "express": "^4.18.2",
+    "chart.js": "^4.3.3",
+    "ng2-charts": "^4.1.1",
     "keycloak-angular": "^15.2.1",
     "keycloak-js": "^24.0.4",
     "rxjs": "~7.8.0",

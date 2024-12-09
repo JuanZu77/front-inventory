@@ -9,6 +9,7 @@ import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
 import { KeycloakOnLoad, KeycloakFlow } from 'keycloak-js';
 import { isPlatformBrowser } from '@angular/common';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { NgChartsModule } from 'ng2-charts';
 
 function initializeKeycloak(keycloak: KeycloakService, platformId: Object) {
   return () => {
@@ -46,7 +47,8 @@ function initializeKeycloak(keycloak: KeycloakService, platformId: Object) {
     AppRoutingModule,
     DashboardModule,
     MaterialModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    NgChartsModule
   ],
   providers: [
     provideHttpClient(withFetch()),
