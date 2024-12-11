@@ -7,6 +7,7 @@ import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/s
 import { ConfirmComponent } from '../../../shared/components/confirm/confirm.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { UtilService } from '../../../shared/services/util.service';
+import { error } from 'console';
 
 
 export interface CategoryElement{
@@ -110,6 +111,25 @@ export class CategoryComponent implements OnInit{
         })
 
       };
+
+//EXCEL REPORT
+      exportExcel(){
+         this.categoryServices.exportCategory()
+         .subscribe((data:any)=>{
+          //defino tipo de archivo(con el string de type)
+          let file = new Blob([data],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+
+          let fileUrl = URL.createObjectURL(file);
+          var anchor = document.createElement("a");
+          anchor.download = "categories.xlsx";
+          anchor.href = fileUrl;
+          anchor.click();
+
+          this.openSnackBar("Archivo exportado correctamente", "Descarga Exitosa");
+         }, (error:any)=>{
+          this.openSnackBar("Error al exportar el archivo", "No se pudo descargar el archivo");
+         })
+      }
 
 
 
